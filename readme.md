@@ -7,6 +7,11 @@
 ```bash
 composer install
 ```
+- Copy the .env file an create an application key
+
+```bash
+cp .env.example .env && php artisan key:generate
+```
 
 - Should take installed and running in your system mongodb and redis.
 
@@ -30,20 +35,21 @@ php artisan db:seed
 
 GET   http://127.0.0.1:8000/api/tasks
 
-###Filters
+### Filters
 
-The tasks can be filter by due date, completed and uncompleted, date of creation, and date of update.
+The tasks can be filter by due date, completed and uncompleted, date of creation, and date of update.   
 
-Should be defined the parameter `where` like array three-dimensional, where:
-1st position: Property of task to filter
-2nd position: The filter operator (supported operators: `=`, `!=`, `IN`, `LIKE`, `>`, `>=`, `<`, `<=`)
+Should be defined the parameter `where` like array three-dimensional, where:   
+1st position: Property of task to filter   
+2nd position: The filter operator (supported operators: `=`, `!=`, `IN`, `LIKE`, `>`, `>=`, `<`, `<=`)   
 3rd position: The value to search
 
 GET   http://127.0.0.1:8000/api/tasks?where[0][0][]=created_at&where[0][0][]=>=&where[0][0][]=2017-09-01
 
 Retrieve task can be cumbersome, instance can use:
 
-POST   http://127.0.0.1:8000/api/tasks/search 
+POST   http://127.0.0.1:8000/api/tasks/search   
+```json
 {
     "where":
     [
@@ -56,6 +62,7 @@ POST   http://127.0.0.1:8000/api/tasks/search
         ]
     ]
 }
+```
 
 ### Pagination
 
@@ -70,10 +77,12 @@ Will return books number 30-40.
 - If you want create a task, can send the body as json or as form-data.
 
 POST   http://127.0.0.1:8000/api/tasks 
+```json
 {
     "title": "Title task one",
     "due_date": "2017-09-21"
 }
+```
 
 - To retrieve a task you must provide an ID
 
@@ -82,9 +91,11 @@ GET   http://127.0.0.1:8000/api/tasks/{id}
 - If you want update a Task, can send the body as json or as x-www-form-urlencoded
 
  PUT   http://127.0.0.1:8000/api/tasks/{id}
+ ```json
  {
      "title": "New title"
  }
+ ```
  
 - To remove a task you must provide an ID
  
